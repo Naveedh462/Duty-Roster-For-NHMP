@@ -1,11 +1,9 @@
 package Model;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dutyrosterfornhmp.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.net.URI;
-import java.util.List;
-
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import AdminOfficer.DetailActivity;
-import AdminOfficer.ListUserActivity;
 
 public class OfficerAdapter extends RecyclerView.Adapter<OfficerAdapter.OfficerViewHolder> {
     public static final String USER_KEY = "user_key";

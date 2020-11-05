@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,8 +29,6 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.net.URI;
-
 import Model.Officers;
 
 public class AddUserActivity extends AppCompatActivity {
@@ -43,7 +40,7 @@ public class AddUserActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private EditText userFirstName, userLastName, userEmailAddress, userPassword;
     private ImageView profilePic;
-    private Uri resultUri=null;
+    private Uri mImageUri =null;
     private final static int GALLERY_CODE=1;
 
 
@@ -55,7 +52,7 @@ public class AddUserActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mRefe = mDatabase.getReference("officers");
-        mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("Profile_Pics/");
+        mFirebaseStorage = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
 
         profilePic=findViewById(R.id.ProfilePic);
@@ -124,19 +121,20 @@ public class AddUserActivity extends AppCompatActivity {
            userPassword.setError("password should be 6 character");
            return;
        }
-
-        mProgressDialog.setMessage("please wait...");
+        mProgressDialog.setTitle("Creating user...");
+        mProgressDialog.setMessage("Please wait...");
         mProgressDialog.show();
         mAuth.createUserWithEmailAndPassword(email_address,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     StorageReference imagePath = mFirebaseStorage.child("Profile_Pics")
-                            .child(resultUri.getLastPathSegment());
-                    imagePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            .child(mImageUri.getLastPathSegment());
+                    imagePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Officers officers= new Officers(resultUri.toString(),first_name, last_name,email_address);
+                            Task<Uri> downloadurl = taskSnapshot.getStorage().getDownloadUrl();
+                            Officers officers= new Officers(downloadurl.toString(),first_name, last_name,email_address);
                             mRefe.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(officers).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -156,8 +154,6 @@ public class AddUserActivity extends AppCompatActivity {
 
                         }
                     });
-                    // set values into real time database
-                    // such as name, email address etc
                 }
                 else {
                     Toast.makeText(AddUserActivity.this, "user not add successfully", Toast.LENGTH_SHORT).show();
@@ -182,8 +178,8 @@ public class AddUserActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
-                resultUri = result.getUri();
-                profilePic.setImageURI(resultUri);
+                mImageUri = result.getUri();
+                profilePic.setImageURI(mImageUri);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

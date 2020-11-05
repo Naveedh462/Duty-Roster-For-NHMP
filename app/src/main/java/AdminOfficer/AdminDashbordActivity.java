@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,8 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private NavigationView navigationView;
     private Toolbar toolbar;
     private ProgressDialog mProgressDialog;
-    private ImageView addOfficer, viewListOfficers;
-    private TextView adminName,adminId,adminNameInMenu,adminEmailInMenu;
+    private ImageView addOfficer, viewListOfficers,admin_dp;
+    private TextView adminName,adminId;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
     private FirebaseAuth mAuth;
@@ -65,8 +66,12 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         viewListOfficers = findViewById(R.id.view_list_officers);
         adminName=findViewById(R.id.admin_name);
         adminId=findViewById(R.id.admin_id);
-        adminNameInMenu=findViewById(R.id.admin_name_in_menu);
-        adminEmailInMenu=findViewById(R.id.admin_email_in_menu);
+        admin_dp=findViewById(R.id.admin_dp);
+        Picasso.get()
+                .load("https://firebasestorage.googleapis.com/v0/b/duty-roster-for-nhmp.appspot.com/o/Profile_Pics%2FNaveed%203.jpg?alt=media&token=15c4b1b1-e44c-4085-863d-6602a401314d")
+                .fit()
+                .centerCrop()
+                .into(admin_dp);
 
         // now set admin detail
         mRefe.addValueEventListener(new ValueEventListener() {
