@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "216036324001",
+    "firebase_url": "https://duty-roster-for-nhmp.firebaseio.com",
+    "project_id": "duty-roster-for-nhmp",
+    "storage_bucket": "duty-roster-for-nhmp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216036324001:android:22c11314d0340b1a4536e0",
+        "android_client_info": {
+          "package_name": "com.example.dutyrosterfornhmp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216036324001-rodb9976ldanlksa5t4du1b0lg9b05p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD34PJUcxOt-8YwOW4zqxHH9e-07khBPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216036324001-rodb9976ldanlksa5t4du1b0lg9b05p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

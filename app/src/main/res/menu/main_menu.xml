@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ico_notifications"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ico_settings"
+            android:title="Settings" />
+        />
+    </group>
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/Admin_profile"
+                    android:icon="@drawable/ico_user"
+                    android:title="Profile" />
+
+                <item
+                    android:id="@+id/Admin_logout"
+                    android:icon="@drawable/ico_logout"
+                    android:title="Logout" />
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <group>
+
+                <item
+                    android:icon="@drawable/ico_feedback"
+                    android:title="Feedback" />
+
+                <item
+                    android:icon="@drawable/ico_share"
+                    android:title="Share" />
+            </group>
+        </menu>
+
+    </item>
+</menu>

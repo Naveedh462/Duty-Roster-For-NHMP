@@ -1,0 +1,14 @@
+<resources>
+
+    <!--- String for login activity -->
+    <string name="app_name">Duty Roster for NHMP</string>
+    <string name="Username_or_email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">forgot password?</string>
+    <string name="login">login</string>
+    <string name="remember_me">Remember me</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>
