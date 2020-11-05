@@ -15,12 +15,17 @@ import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.dutyrosterfornhmp.LoginActivity;
 import com.example.dutyrosterfornhmp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +38,23 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private Toolbar toolbar;
     private ProgressDialog mProgressDialog;
     private ImageView addOfficer, viewListOfficers;
+    private TextView adminName,adminId;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRefe;
+    private FirebaseAuth mAuth;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashbaord);
+
+        // getting current user
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mRefe = mDatabase.getReference("Admin").child(uid);
 
 
         mProgressDialog = new ProgressDialog(this);
@@ -47,6 +63,26 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         toolbar = findViewById(R.id.toolbar);
         addOfficer = findViewById(R.id.add_Officer);
         viewListOfficers = findViewById(R.id.view_list_officers);
+        adminName=findViewById(R.id.admin_name);
+        adminId=findViewById(R.id.admin_id);
+
+        // now set admin detail
+        mRefe.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String fName=snapshot.child("first_Name").getValue().toString();
+                String lName=snapshot.child("last_Name").getValue().toString();
+                String id=snapshot.child("admin_ID").getValue().toString();
+                adminName.setText(fName+" "+lName);
+                adminId.setText(id);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         ViewPager viewPager = findViewById(R.id.viewPager);
         ImageAdapter adapter = new ImageAdapter(this);
