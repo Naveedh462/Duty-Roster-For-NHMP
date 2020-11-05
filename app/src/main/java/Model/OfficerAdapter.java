@@ -60,7 +60,6 @@ public class OfficerAdapter extends RecyclerView.Adapter<OfficerAdapter.OfficerV
         holder.last_name.setText(officers.getLast_Name());
         Picasso.get()
                 .load(officers.getProfile_Image())
-                .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
                 .into(holder.proImage);

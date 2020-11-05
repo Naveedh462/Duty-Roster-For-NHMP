@@ -38,7 +38,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private Toolbar toolbar;
     private ProgressDialog mProgressDialog;
     private ImageView addOfficer, viewListOfficers;
-    private TextView adminName,adminId;
+    private TextView adminName,adminId,adminNameInMenu,adminEmailInMenu;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
     private FirebaseAuth mAuth;
@@ -65,6 +65,8 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         viewListOfficers = findViewById(R.id.view_list_officers);
         adminName=findViewById(R.id.admin_name);
         adminId=findViewById(R.id.admin_id);
+        adminNameInMenu=findViewById(R.id.admin_name_in_menu);
+        adminEmailInMenu=findViewById(R.id.admin_email_in_menu);
 
         // now set admin detail
         mRefe.addValueEventListener(new ValueEventListener() {
@@ -73,8 +75,10 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 String fName=snapshot.child("first_Name").getValue().toString();
                 String lName=snapshot.child("last_Name").getValue().toString();
                 String id=snapshot.child("admin_ID").getValue().toString();
+                String email=snapshot.child("email_address").getValue().toString();
                 adminName.setText(fName+" "+lName);
                 adminId.setText(id);
+
 
             }
 
