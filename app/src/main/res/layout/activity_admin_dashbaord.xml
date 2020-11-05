@@ -59,7 +59,7 @@
                 app:civ_border_width="2dp" />
 
             <TextView
-                android:id="@+id/admin_n"
+                android:id="@+id/admin_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -70,7 +70,7 @@
                 android:textColor="@color/colorYellow" />
 
             <TextView
-
+                android:id="@+id/admin_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
