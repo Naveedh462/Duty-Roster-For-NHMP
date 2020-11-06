@@ -82,15 +82,14 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         mRefe.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String fName=snapshot.child("first_Name").getValue().toString();
-                String lName=snapshot.child("last_Name").getValue().toString();
-                String id=snapshot.child("admin_ID").getValue().toString();
-                String email=snapshot.child("email_address").getValue().toString();
+               String fName=String.valueOf(snapshot.child("first_Name").getValue());
+                String lName=String.valueOf(snapshot.child("last_Name").getValue());
+                String id=String.valueOf(snapshot.child("admin_ID").getValue());
+                String email=String.valueOf(snapshot.child("email_address").getValue());
                 adminName.setText(fName+" "+lName);
                 adminId.setText(id);
                 adminNameInMenu.setText(fName+" "+lName);
                 adminEmailInMenu.setText(email);
-
 
             }
 
