@@ -1,9 +1,5 @@
 package AdminOfficer;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dutyrosterfornhmp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,7 +38,8 @@ public class AddUserActivity extends AppCompatActivity {
     private StorageReference mFirebaseStorage;
     private Button addUser;
     private ProgressDialog mProgressDialog;
-    private EditText userFirstName, userLastName, userEmailAddress, userPassword;
+    private EditText userFirstName, userLastName, userEmailAddress,
+            userPassword, gender,FatherName, Address,CNIC,ID,mobileNo;
     private ImageView profilePic;
     private Uri mImageUri =null;
     private final static int GALLERY_CODE=1;
@@ -58,9 +59,17 @@ public class AddUserActivity extends AppCompatActivity {
         profilePic=findViewById(R.id.ProfilePic);
         userFirstName = findViewById(R.id.user_first_name);
         userLastName = findViewById(R.id.user_last_name);
+        FatherName=findViewById(R.id.user_father_name);
         userEmailAddress = findViewById(R.id.user_email_address);
         userPassword = findViewById(R.id.user_password);
         addUser = findViewById(R.id.add_user);
+        gender=findViewById(R.id.user_gender);
+        Address=findViewById(R.id.user_address);
+        CNIC=findViewById(R.id.user_cnic_no);
+        ID=findViewById(R.id.user_Id);
+        mobileNo=findViewById(R.id.user_mobile_no);
+
+
 
 
         // set officer profile picture
@@ -88,7 +97,13 @@ public class AddUserActivity extends AppCompatActivity {
         final String first_name = userFirstName.getText().toString().trim();
         final String last_name = userLastName.getText().toString().trim();
         final String email_address = String.valueOf(userEmailAddress.getText().toString().trim());
-        String password = String.valueOf(userPassword.getText().toString().trim());
+        final String password = String.valueOf(userPassword.getText().toString().trim());
+        final String Gender=gender.getText().toString().trim();
+        final String id=String.valueOf(ID.getText().toString().trim());
+        final String address=Address.getText().toString().trim();
+        final String cnic=String.valueOf(CNIC.getText().toString().trim());
+        final String Mobileno=String.valueOf(mobileNo.getText().toString().trim());
+        final String fathername=FatherName.getText().toString().trim();
        if(first_name.isEmpty())
        {
            userFirstName.setError("required first name");
@@ -134,7 +149,7 @@ public class AddUserActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Task<Uri> downloadurl = taskSnapshot.getStorage().getDownloadUrl();
-                            Officers officers= new Officers(downloadurl.toString(),first_name, last_name,email_address);
+                            Officers officers= new Officers(downloadurl.toString(),first_name,last_name,fathername,Gender,id,email_address,Mobileno,cnic,address);
                             mRefe.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(officers).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

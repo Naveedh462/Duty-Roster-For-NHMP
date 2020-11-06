@@ -44,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Officers officers=snapshot.getValue(Officers.class);
                 Name.setText(officers.getFirst_Name()+" "+officers.getLast_Name());
-                emailAddress.setText(officers.getEmail_address());
+                emailAddress.setText(officers.getEmail_Address());
             }
 
             @Override

@@ -4,8 +4,9 @@
     android:layout_height="200dp"
     android:orientation="vertical"
     android:gravity="bottom"
-    android:padding="16dp"
+    android:padding="10dp"
     android:background="@color/colorYellow"
+    android:id="@+id/header"
     >
     <ImageView
         android:layout_width="100dp"
@@ -16,13 +17,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textStyle="bold"
         android:textColor="@color/colorBlue"
         />
     <TextView
         android:id="@+id/admin_email_in_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
         android:text=""
         android:textColor="@color/colorBlue"
         />

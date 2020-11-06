@@ -39,7 +39,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private Toolbar toolbar;
     private ProgressDialog mProgressDialog;
     private ImageView addOfficer, viewListOfficers,admin_dp;
-    private TextView adminName,adminId;
+    private TextView adminName,adminId,adminNameInMenu,adminEmailInMenu;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
     private FirebaseAuth mAuth;
@@ -67,7 +67,12 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         adminName=findViewById(R.id.admin_name);
         adminId=findViewById(R.id.admin_id);
         admin_dp=findViewById(R.id.admin_dp);
-        Picasso.get()
+        View hView=navigationView.inflateHeaderView(R.layout.header);
+        adminNameInMenu=hView.findViewById(R.id.admin_name_in_menu);
+        adminEmailInMenu=hView.findViewById(R.id.admin_email_in_menu);
+
+
+       Picasso.get()
                 .load("https://firebasestorage.googleapis.com/v0/b/duty-roster-for-nhmp.appspot.com/o/Profile_Pics%2FNaveed%203.jpg?alt=media&token=15c4b1b1-e44c-4085-863d-6602a401314d")
                 .fit()
                 .centerCrop()
@@ -83,6 +88,8 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 String email=snapshot.child("email_address").getValue().toString();
                 adminName.setText(fName+" "+lName);
                 adminId.setText(id);
+                adminNameInMenu.setText(fName+" "+lName);
+                adminEmailInMenu.setText(email);
 
 
             }
