@@ -99,7 +99,7 @@ public class AddUserActivity extends AppCompatActivity {
         final String password = String.valueOf(userPassword.getText().toString().trim());
         final String Gender = gender.getText().toString().trim();
         final String id = String.valueOf(ID.getText().toString().trim());
-        final String address = Address.getText().toString().trim();
+        final String address =String.valueOf(Address.getText().toString().trim());
         final String cnic = String.valueOf(CNIC.getText().toString().trim());
         final String Mobileno = String.valueOf(mobileNo.getText().toString().trim());
         final String fathername = FatherName.getText().toString().trim();
