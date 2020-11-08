@@ -123,7 +123,7 @@
                 android:id="@+id/user_Id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text"
+                android:inputType="phone"
                 android:textColor="@color/colorYellow" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,7 +185,7 @@
                 android:id="@+id/user_mobile_no"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text"
+                android:inputType="phone"
                 android:textColor="@color/colorYellow" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +198,7 @@
             app:boxStrokeWidthFocused="2dp"
             app:endIconTint="@color/colorYellow"
             app:hintTextColor="@color/colorYellow"
-            app:startIconDrawable="@drawable/ico_mobile"
+            app:startIconDrawable="@drawable/ico_cnic"
             app:startIconTint="@color/colorYellow">
 
             <com.google.android.material.textfield.TextInputEditText

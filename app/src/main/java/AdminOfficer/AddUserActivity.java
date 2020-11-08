@@ -39,10 +39,10 @@ public class AddUserActivity extends AppCompatActivity {
     private Button addUser;
     private ProgressDialog mProgressDialog;
     private EditText userFirstName, userLastName, userEmailAddress,
-            userPassword, gender,FatherName, Address,CNIC,ID,mobileNo;
+            userPassword, gender, FatherName, Address, CNIC, ID, mobileNo;
     private ImageView profilePic;
-    private Uri mImageUri =null;
-    private final static int GALLERY_CODE=1;
+    private Uri mImageUri = null;
+    private final static int GALLERY_CODE = 1;
 
 
     @Override
@@ -56,30 +56,28 @@ public class AddUserActivity extends AppCompatActivity {
         mFirebaseStorage = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
 
-        profilePic=findViewById(R.id.ProfilePic);
+        profilePic = findViewById(R.id.ProfilePic);
         userFirstName = findViewById(R.id.user_first_name);
         userLastName = findViewById(R.id.user_last_name);
-        FatherName=findViewById(R.id.user_father_name);
+        FatherName = findViewById(R.id.user_father_name);
         userEmailAddress = findViewById(R.id.user_email_address);
         userPassword = findViewById(R.id.user_password);
         addUser = findViewById(R.id.add_user);
-        gender=findViewById(R.id.user_gender);
-        Address=findViewById(R.id.user_address);
-        CNIC=findViewById(R.id.user_cnic_no);
-        ID=findViewById(R.id.user_Id);
-        mobileNo=findViewById(R.id.user_mobile_no);
-
-
+        gender = findViewById(R.id.user_gender);
+        Address = findViewById(R.id.user_address);
+        CNIC = findViewById(R.id.user_cnic_no);
+        ID = findViewById(R.id.user_Id);
+        mobileNo = findViewById(R.id.user_mobile_no);
 
 
         // set officer profile picture
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent= new Intent();
+                Intent galleryIntent = new Intent();
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent,GALLERY_CODE);
+                startActivityForResult(galleryIntent, GALLERY_CODE);
 
             }
         });
@@ -94,83 +92,85 @@ public class AddUserActivity extends AppCompatActivity {
     }
 
     public void addNewUser() {
+        String imageUrl;
         final String first_name = userFirstName.getText().toString().trim();
         final String last_name = userLastName.getText().toString().trim();
         final String email_address = String.valueOf(userEmailAddress.getText().toString().trim());
         final String password = String.valueOf(userPassword.getText().toString().trim());
-        final String Gender=gender.getText().toString().trim();
-        final String id=String.valueOf(ID.getText().toString().trim());
-        final String address=Address.getText().toString().trim();
-        final String cnic=String.valueOf(CNIC.getText().toString().trim());
-        final String Mobileno=String.valueOf(mobileNo.getText().toString().trim());
-        final String fathername=FatherName.getText().toString().trim();
-       if(first_name.isEmpty())
-       {
-           userFirstName.setError("required first name");
-           userFirstName.requestFocus();
-           return;
-       }
-       if(last_name.isEmpty())
-       {
-           userLastName.setError("required last name");
-           userLastName.requestFocus();
-           return;
-       }
+        final String Gender = gender.getText().toString().trim();
+        final String id = String.valueOf(ID.getText().toString().trim());
+        final String address = Address.getText().toString().trim();
+        final String cnic = String.valueOf(CNIC.getText().toString().trim());
+        final String Mobileno = String.valueOf(mobileNo.getText().toString().trim());
+        final String fathername = FatherName.getText().toString().trim();
+        if (first_name.isEmpty()) {
+            userFirstName.setError("required first name");
+            userFirstName.requestFocus();
+            return;
+        }
+        if (last_name.isEmpty()) {
+            userLastName.setError("required last name");
+            userLastName.requestFocus();
+            return;
+        }
 
-       if (email_address.isEmpty())
-       {
-           userEmailAddress.setError("required last name");
-           userEmailAddress.requestFocus();
-           return;
-       }
-       if (!Patterns.EMAIL_ADDRESS.matcher(email_address).matches()){
-           userEmailAddress.setError("required valid email address");
-           return;
-       }
-       if (password.isEmpty()){
-           userPassword.setError("required password");
-           return;
-       }
-       if (password.length()<6)
-       {
-           userPassword.setError("password should be 6 character");
-           return;
-       }
+        if (email_address.isEmpty()) {
+            userEmailAddress.setError("required last name");
+            userEmailAddress.requestFocus();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email_address).matches()) {
+            userEmailAddress.setError("required valid email address");
+            return;
+        }
+        if (password.isEmpty()) {
+            userPassword.setError("required password");
+            return;
+        }
+        if (password.length() < 6) {
+            userPassword.setError("password should be 6 character");
+            return;
+        }
         mProgressDialog.setTitle("Creating user...");
         mProgressDialog.setMessage("Please wait...");
         mProgressDialog.show();
-        mAuth.createUserWithEmailAndPassword(email_address,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email_address, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    StorageReference imagePath = mFirebaseStorage.child("Profile_Pics")
+                if (task.isSuccessful()) {
+                    final StorageReference imagePath = mFirebaseStorage.child("Profile_Pics")
                             .child(mImageUri.getLastPathSegment());
                     imagePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Task<Uri> downloadurl = taskSnapshot.getStorage().getDownloadUrl();
-                            Officers officers= new Officers(downloadurl.toString(),first_name,last_name,fathername,Gender,id,email_address,Mobileno,cnic,address);
-                            mRefe.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(officers).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            imagePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                public void onSuccess(Uri uri) {
+                                    Uri donwloadUrl = uri;
+                                    String imageUrl = donwloadUrl.toString();
+                                    Officers officers = new Officers(imageUrl, first_name, last_name, fathername, Gender, id, email_address, Mobileno, cnic, address);
+                                    mRefe.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .setValue(officers).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
 
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(AddUserActivity.this, "user add successfully", Toast.LENGTH_SHORT).show();
-                                        mProgressDialog.hide();
-                                    }
-                                    else{
-                                        Toast.makeText(AddUserActivity.this, "user not add successfully", Toast.LENGTH_SHORT).show();
-                                        mProgressDialog.hide();
-                                    }
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(AddUserActivity.this, "user add successfully", Toast.LENGTH_SHORT).show();
+                                                mProgressDialog.hide();
+                                            } else {
+                                                Toast.makeText(AddUserActivity.this, "user not add successfully", Toast.LENGTH_SHORT).show();
+                                                mProgressDialog.hide();
+                                            }
+                                        }
+                                    });
+
+
                                 }
                             });
-
-
                         }
                     });
-                }
-                else {
+
+                } else {
                     Toast.makeText(AddUserActivity.this, "user not add successfully", Toast.LENGTH_SHORT).show();
                     mProgressDialog.hide();
 
@@ -178,11 +178,13 @@ public class AddUserActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GALLERY_CODE && resultCode==RESULT_OK){
-            Uri mImageUri=data.getData();
+        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
+            Uri mImageUri = data.getData();
+            profilePic.setImageURI(mImageUri);
             CropImage.activity(mImageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(this);
