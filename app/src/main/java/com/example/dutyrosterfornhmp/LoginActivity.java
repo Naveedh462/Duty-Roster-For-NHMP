@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import AdminOfficer.AdminDashbordActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "MyTag";
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //initialiaztion buttons, textview, edittext etc
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        mRefe = mDatabase.getReference("Admin");
+
 
         mProgressDialog = new ProgressDialog(this);
         //mProgressBar = findViewById(R.id.progressBar);
@@ -147,7 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -157,5 +159,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(this, AdminDashbordActivity.class));
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //return;
     }
 }

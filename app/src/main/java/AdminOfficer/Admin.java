@@ -8,20 +8,24 @@ public class Admin {
     private String mobileNo;
     private String CNIC;
     private String Address;
+    private int admin_ID;
+
     public Admin() {
     }
 
-    public Admin(String first_Name, String last_Name, String email_address, String type, String mobileno, String cnic, String address) {
+    public Admin(String first_Name, String last_Name, String email_address, String type, String mobileno, String cnic, String address, int id) {
         First_Name = first_Name;
         Last_Name = last_Name;
         Email_Address = email_address;
-        Type=type;
-        mobileNo=mobileno;
-        CNIC=cnic;
-        Address=address;
+        Type = type;
+        mobileNo = mobileno;
+        CNIC = cnic;
+        Address = address;
+        admin_ID = id;
 
 
     }
+
     //getters
     public String getFirst_Name() {
         return First_Name;
@@ -50,6 +54,12 @@ public class Admin {
     public String getAddress() {
         return Address;
     }
+
+    public int getAdmin_ID() {
+        return admin_ID;
+    }
+
+    ;
     //setters
 
     public void setFirst_Name(String first_Name) {
@@ -64,7 +74,9 @@ public class Admin {
         Email_Address = email_address;
     }
 
-    public void setType(String type) { Type = type;}
+    public void setType(String type) {
+        Type = type;
+    }
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
@@ -77,5 +89,7 @@ public class Admin {
     public void setAddress(String address) {
         Address = address;
     }
+
+    public void setAdmin_ID(int id) { admin_ID = id; }
 }
 
