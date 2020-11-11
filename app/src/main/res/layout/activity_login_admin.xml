@@ -50,7 +50,7 @@
                 app:startIconTint="@color/colorYellow">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/admin_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"
@@ -71,7 +71,7 @@
                 app:startIconTint="@color/colorYellow">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/admin_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
@@ -98,7 +98,7 @@
             </RelativeLayout>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/admin_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_buttons"

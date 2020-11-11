@@ -39,7 +39,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_admin);
 
         //initialiaztion buttons, textview, edittext etc
         mAuth = FirebaseAuth.getInstance();
@@ -48,12 +48,12 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
 
         mProgressDialog = new ProgressDialog(this);
         //mProgressBar = findViewById(R.id.progressBar);
-        login_Button = findViewById(R.id.login);
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
+        login_Button = findViewById(R.id.admin_login);
+        editTextEmail = findViewById(R.id.admin_email);
+        editTextPassword = findViewById(R.id.admin_password);
         forget_Password = findViewById(R.id.forget_password);
 
-        login_Button.findViewById(R.id.login).setOnClickListener(this);
+        login_Button.findViewById(R.id.admin_login).setOnClickListener(this);
         forget_Password.findViewById(R.id.forget_password).setOnClickListener(this);
 
     }
@@ -61,7 +61,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login:
+            case R.id.admin_login:
                 login();
                 break;
             case R.id.forget_password:
