@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dutyrosterfornhmp.LoginActivity;
-import com.example.dutyrosterfornhmp.MainActivity;
+import com.example.dutyrosterfornhmp.GetStartActivity;
+import com.example.dutyrosterfornhmp.LoginAdminActivity;
 import com.example.dutyrosterfornhmp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,10 +59,9 @@ public class AdminProfileActivity extends AppCompatActivity {
                     case R.id.logout_in_Profile:
                         FirebaseAuth.getInstance().signOut();
                         finish();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        startActivity(new Intent(getApplicationContext(), GetStartActivity.class));
                         break;
                 }
-                return;
 
             }
         });

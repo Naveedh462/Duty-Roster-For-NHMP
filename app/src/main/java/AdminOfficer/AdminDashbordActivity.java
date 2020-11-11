@@ -17,7 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.dutyrosterfornhmp.LoginActivity;
+import com.example.dutyrosterfornhmp.GetStartActivity;
+import com.example.dutyrosterfornhmp.LoginAdminActivity;
 import com.example.dutyrosterfornhmp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,9 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import Model.ImageAdapter;
 
@@ -152,7 +150,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 case R.id.Admin_logout:
                     FirebaseAuth.getInstance().signOut();
                     finish();
-                    startActivity(new Intent(this, LoginActivity.class));
+                    startActivity(new Intent(this, GetStartActivity.class));
                     break;
                 case R.id.Admin_profile:
                     startActivity(new Intent(this, AdminProfileActivity.class));

@@ -7,7 +7,6 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
@@ -19,17 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import AdminOfficer.AdminDashbordActivity;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginAdminActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MyTag";
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -83,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         pairs[0] = new Pair<View, String>(forget_Password, "transition_forget_Password");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginAdminActivity.this, pairs);
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
@@ -138,14 +132,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     pairs[0] = new Pair<View, String>(login_Button, "transition_login");
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginAdminActivity.this, pairs);
                         startActivity(intent,options.toBundle());
                     } else {
                         startActivity(intent);
                     }
                 }else {
 
-                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginAdminActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -159,11 +153,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(this, AdminDashbordActivity.class));
         }
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        //return;
     }
 }
