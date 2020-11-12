@@ -129,6 +129,8 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
                 mProgressDialog.hide();
                 if (task.isSuccessful()) {
                     finish();
+                    String uid=mAuth.getCurrentUser().getUid();
+                    mRefe = mDatabase.getReference("Admin").child(uid);
                     mRefe.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
