@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import AdminOfficer.AdminDashbordActivity;
 
@@ -44,6 +47,8 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
         //initialiaztion buttons, textview, edittext etc
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+        String uid=mAuth.getCurrentUser().getUid();
+        mRefe = mDatabase.getReference("Admin").child(uid);
 
 
         mProgressDialog = new ProgressDialog(this);
@@ -88,6 +93,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
         final String emailIs = editTextEmail.getText().toString().trim();
         String passwordIs = editTextPassword.getText().toString().trim();
 
+
         // to check that if email edittext(Email) is empty
 
         if (emailIs.isEmpty()) {
@@ -123,12 +129,29 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
                 mProgressDialog.hide();
                 if (task.isSuccessful()) {
                     finish();
+                    mRefe.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.child("email_address").getValue()==emailIs){
+                                Intent intent = new Intent(getApplicationContext(), AdminDashbordActivity.class);
+                            }
+                            else{
+                                Toast.makeText(LoginAdminActivity.this, "Record not founded" ,Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(getApplicationContext(), AdminDashbordActivity.class);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
 
                     // add animations
 
-                    Pair[] pairs = new Pair[1];
+                   /* Pair[] pairs = new Pair[1];
                     pairs[0] = new Pair<View, String>(login_Button, "transition_login");
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -136,7 +159,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
                         startActivity(intent,options.toBundle());
                     } else {
                         startActivity(intent);
-                    }
+                    }*/
                 }else {
 
                     Toast.makeText(LoginAdminActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -35,7 +35,6 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ProgressDialog mProgressDialog;
     private ImageView addOfficer, viewListOfficers,admin_dp;
     private TextView adminName,adminId,adminNameInMenu,adminEmailInMenu;
     private FirebaseDatabase mDatabase;
@@ -49,34 +48,27 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashbaord);
 
-        // getting current user
+        /* getting current user and reference from real-time database with uid*/
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid=mAuth.getCurrentUser().getUid();
         mRefe = mDatabase.getReference("Admin").child(uid);
 
 
-        mProgressDialog = new ProgressDialog(this);
-        drawerLayout = findViewById(R.id.DrawLayout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+        /* initialization by id from xml layout */
+        drawerLayout = findViewById(R.id.DrawLayout_of_admin);
+        navigationView = findViewById(R.id.navview_admin);
+        toolbar = findViewById(R.id.toolbar_in_admin_dashboard);
         addOfficer = findViewById(R.id.add_Officer);
         viewListOfficers = findViewById(R.id.view_list_officers);
         adminName=findViewById(R.id.admin_name);
         adminId=findViewById(R.id.admin_id);
         admin_dp=findViewById(R.id.admin_dp);
         View hView=navigationView.inflateHeaderView(R.layout.header);
-        adminNameInMenu=hView.findViewById(R.id.admin_name_in_menu);
-        adminEmailInMenu=hView.findViewById(R.id.admin_email_in_menu);
+        adminNameInMenu=hView.findViewById(R.id.current_name_in_menu);
+        adminEmailInMenu=hView.findViewById(R.id.current_email_in_menu);
 
-
-       Picasso.get()
-                .load("https://firebasestorage.googleapis.com/v0/b/duty-roster-for-nhmp.appspot.com/o/Profile_Pics%2FNaveed%203.jpg?alt=media&token=15c4b1b1-e44c-4085-863d-6602a401314d")
-                .fit()
-                .centerCrop()
-                .into(admin_dp);
-
-        // now set admin detail
+        /* now set admin detail */
         mRefe.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,6 +76,13 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 String lName=String.valueOf(snapshot.child("last_Name").getValue());
                 String id=String.valueOf(snapshot.child("admin_ID").getValue());
                 String email=String.valueOf(snapshot.child("email_address").getValue());
+
+                /* getting profile image url from real-time database */
+                Picasso.get()
+                        .load(snapshot.child("profile_Image").getValue().toString())
+                        .fit()
+                        .centerCrop()
+                        .into(admin_dp);
                 adminName.setText(fName+" "+lName);
                 adminId.setText(id);
                 adminNameInMenu.setText(fName+" "+lName);
@@ -93,10 +92,13 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                adminName.setText(error.toString());
+                adminId.setText(error.toString());
 
             }
         });
 
+        // slider
         ViewPager viewPager = findViewById(R.id.viewPager);
         ImageAdapter adapter = new ImageAdapter(this);
         viewPager.setAdapter(adapter);
