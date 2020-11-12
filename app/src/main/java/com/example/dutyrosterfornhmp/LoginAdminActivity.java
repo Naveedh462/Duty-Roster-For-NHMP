@@ -47,8 +47,6 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
         //initialiaztion buttons, textview, edittext etc
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        String uid=mAuth.getCurrentUser().getUid();
-        mRefe = mDatabase.getReference("Admin").child(uid);
 
 
         mProgressDialog = new ProgressDialog(this);
@@ -169,6 +167,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+    /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -178,5 +177,5 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
             startActivity(new Intent(this, AdminDashbordActivity.class));
         }
 
-    }
+    }*/
 }
