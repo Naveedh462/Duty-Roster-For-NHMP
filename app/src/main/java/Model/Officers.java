@@ -2,8 +2,6 @@ package Model;
 
 import androidx.annotation.Nullable;
 
-import java.util.PriorityQueue;
-
 public class Officers {
     private String uid;
     private String Profile_Image;

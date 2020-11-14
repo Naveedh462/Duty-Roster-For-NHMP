@@ -17,12 +17,12 @@
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/Admin_profile"
+                    android:id="@+id/profile"
                     android:icon="@drawable/ico_user"
                     android:title="Profile" />
 
                 <item
-                    android:id="@+id/Admin_logout"
+                    android:id="@+id/logout"
                     android:icon="@drawable/ico_logout"
                     android:title="Logout" />
             </group>

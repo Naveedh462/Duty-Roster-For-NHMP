@@ -7,12 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dutyrosterfornhmp.GetStartActivity;
 import com.example.dutyrosterfornhmp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import AdminOfficer.AdminProfileActivity;
 import Model.ImageAdapter;
 
 public class OfficerDashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,8 +84,8 @@ public class OfficerDashboardActivity extends AppCompatActivity implements Navig
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String fName=String.valueOf(snapshot.child("first_Name").getValue());
                 String lName=String.valueOf(snapshot.child("last_Name").getValue());
-                String id=String.valueOf(snapshot.child("admin_ID").getValue());
-                String email=String.valueOf(snapshot.child("email_address").getValue());
+                String id=String.valueOf(snapshot.child("officer_ID").getValue());
+                String email=String.valueOf(snapshot.child("email_Address").getValue());
 
                 /* getting profile image url from real-time database */
                 Picasso.get()
@@ -94,20 +97,34 @@ public class OfficerDashboardActivity extends AppCompatActivity implements Navig
                 officerId.setText(id);
                 officerNameInMenu.setText(fName+" "+lName);
                 officerEmailInMenu.setText(email);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 officerName.setText(error.toString());
                 officerId.setText(error.toString());
-
             }
         });
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId())
+        {
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this, GetStartActivity.class));
+                break;
+            case R.id.profile:
+                startActivity(new Intent(this, OfficerProfileActivity.class));
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

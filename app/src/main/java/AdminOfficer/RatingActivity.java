@@ -18,31 +18,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.OfficerAdapter;
+import Model.RatingAdapter;
 import Model.Officers;
 
-public class ListUserActivity extends AppCompatActivity {
+public class RatingActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private OfficerAdapter mOfficerAdapter;
+    private RatingAdapter mRatingAdapter;
     private List<Officers> mDataList;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_user);
+        setContentView(R.layout.activity_rating);
+
         mDatabase = FirebaseDatabase.getInstance();
         mRefe = mDatabase.getReference("officers");
 
-        mRecyclerView=findViewById(R.id.officer_RecyclerView);
+        mRecyclerView=findViewById(R.id.officer_RecyclerView_for_Rating);
         mDataList=new ArrayList<>();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mOfficerAdapter=new OfficerAdapter(this,mDataList);
-        mRecyclerView.setAdapter(mOfficerAdapter);
-
+        mRatingAdapter =new RatingAdapter(this,mDataList);
+        mRecyclerView.setAdapter(mRatingAdapter);
     }
     protected void onStart() {
+
         super.onStart();
         mDataList.clear();
         mRefe.addChildEventListener(new ChildEventListener() {
@@ -51,7 +53,7 @@ public class ListUserActivity extends AppCompatActivity {
                 Officers officers=snapshot.getValue(Officers.class);
                 officers.setUid(snapshot.getKey());
                 mDataList.add(officers);
-                mOfficerAdapter.notifyDataSetChanged();
+                mRatingAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -64,8 +66,9 @@ public class ListUserActivity extends AppCompatActivity {
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 Officers officers=snapshot.getValue(Officers.class);
                 officers.setUid(snapshot.getKey());
+
                 mDataList.remove(officers);
-                mOfficerAdapter.notifyDataSetChanged();
+                mRatingAdapter.notifyDataSetChanged();
 
             }
 

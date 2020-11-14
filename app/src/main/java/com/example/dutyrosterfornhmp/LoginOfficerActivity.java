@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
@@ -18,13 +19,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import AdminOfficer.AdminDashbordActivity;
 import Officers.OfficerDashboardActivity;
 
 public class LoginOfficerActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "MyTag";
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
@@ -38,7 +43,7 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_login_officer);
 
         //initialiaztion buttons, textview, edittext etc
-                mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
 
@@ -50,6 +55,7 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
         login_Button.findViewById(R.id.officer_login).setOnClickListener(this);
         forget_Password.findViewById(R.id.forget_password).setOnClickListener(this);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -61,6 +67,7 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
+
     private void forgetPassword() {
         Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
         // add animations
@@ -74,6 +81,7 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
             startActivity(intent);
         }
     }
+
     private void login() {
         final String emailIs = editTextEmail.getText().toString().trim();
         String passwordIs = editTextPassword.getText().toString().trim();
@@ -110,15 +118,26 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
         mAuth.signInWithEmailAndPassword(emailIs, passwordIs).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                mProgressDialog.hide();
                 if (task.isSuccessful()) {
-                    finish();
-
-                    Intent intent = new Intent(getApplicationContext(), OfficerDashboardActivity.class);
-
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRefe = mDatabase.getReference("officers").child(uid);
+                    mRefe.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child("email_Address").getValue().equals(emailIs)) {
+                                mProgressDialog.hide();
+                                startActivity(new Intent(getApplicationContext(),OfficerDashboardActivity.class));
+                            } else {
+                                mProgressDialog.hide();
+                                Toast.makeText(LoginOfficerActivity.this, "Record not founded", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {}
+                    });
                     // add animations
 
-                    Pair[] pairs = new Pair[1];
+                    /*Pair[] pairs = new Pair[1];
                     pairs[0] = new Pair<View, String>(login_Button, "transition_login");
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -126,22 +145,23 @@ public class LoginOfficerActivity extends AppCompatActivity implements View.OnCl
                         startActivity(intent,options.toBundle());
                     } else {
                         startActivity(intent);
-                    }
-                }else {
+                    }*/
+                } else {
 
                     Toast.makeText(LoginOfficerActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+    /*
     @Override
     protected void onStart() {
-        super.onStart();
+       super.onStart();
         if(mAuth.getCurrentUser()!=null)
         {
             finish();
             startActivity(new Intent(this, OfficerDashboardActivity.class));
         }
 
-    }
+    }*/
 }

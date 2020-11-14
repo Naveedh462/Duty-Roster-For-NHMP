@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
@@ -89,7 +90,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
 
     private void login() {
         final String emailIs = editTextEmail.getText().toString().trim();
-        String passwordIs = editTextPassword.getText().toString().trim();
+        final String passwordIs = editTextPassword.getText().toString().trim();
 
 
         // to check that if email edittext(Email) is empty
@@ -124,31 +125,34 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
         mAuth.signInWithEmailAndPassword(emailIs, passwordIs).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                mProgressDialog.hide();
                 if (task.isSuccessful()) {
-                    finish();
-                    String uid=mAuth.getCurrentUser().getUid();
-                    mRefe = mDatabase.getReference("Admin").child(uid);
-                    mRefe.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.child("email_address").getValue()==emailIs){
-                                Intent intent = new Intent(getApplicationContext(), AdminDashbordActivity.class);
+                    //finish();
+                    try {
+                        String uid=mAuth.getCurrentUser().getUid();
+                        mRefe = mDatabase.getReference("Admin").child(uid);
+                        mRefe.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.child("email_address").getValue().equals(emailIs)){
+                                    mProgressDialog.hide();
+                                    startActivity(new Intent(getApplicationContext(), AdminDashbordActivity.class));
+                                }
+                                else{
+                                    mProgressDialog.hide();
+                                    Toast.makeText(LoginAdminActivity.this, "Record not founded" ,Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else{
-                                Toast.makeText(LoginAdminActivity.this, "Record not founded" ,Toast.LENGTH_SHORT).show();
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-
+                    }catch (Exception error){
+                            mProgressDialog.hide();
+                            Toast.makeText(LoginAdminActivity.this, "Record not founded" ,Toast.LENGTH_SHORT).show();
+                    }
                     // add animations
 
                    /* Pair[] pairs = new Pair[1];
@@ -161,7 +165,7 @@ public class LoginAdminActivity extends AppCompatActivity implements View.OnClic
                         startActivity(intent);
                     }*/
                 }else {
-
+                    mProgressDialog.hide();
                     Toast.makeText(LoginAdminActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

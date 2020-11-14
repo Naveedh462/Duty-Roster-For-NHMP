@@ -80,16 +80,7 @@ public class OfficerAdapter extends RecyclerView.Adapter<OfficerAdapter.OfficerV
                         dialog.dismiss();
                     }
                 });
-
-                /*String officerID=officers.getUid();
-                Task<Void> deleteTask = Utils.removeOfficer(officerID);
-                deleteTask.addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        //Toast.makeText(context, "officer has removed from database ", Toast.LENGTH_SHORT).show();
-                    }
-                });/*/
+                
                 AlertDialog alertDialog = dialog.create();
                 alertDialog.show();
             }

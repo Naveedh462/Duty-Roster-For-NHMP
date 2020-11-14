@@ -35,7 +35,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ImageView addOfficer, viewListOfficers,admin_dp;
+    private ImageView addOfficer,addRating, viewListOfficers,admin_dp;
     private TextView adminName,adminId,adminNameInMenu,adminEmailInMenu;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
@@ -64,6 +64,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
         adminName=findViewById(R.id.admin_name);
         adminId=findViewById(R.id.admin_id);
         admin_dp=findViewById(R.id.admin_dp);
+        addRating=findViewById(R.id.add_rating);
         View hView=navigationView.inflateHeaderView(R.layout.header);
         adminNameInMenu=hView.findViewById(R.id.current_name_in_menu);
         adminEmailInMenu=hView.findViewById(R.id.current_email_in_menu);
@@ -127,6 +128,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 }
             }
         });
+
         viewListOfficers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,21 +145,32 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
                 }
             }
         });
+        addRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),RatingActivity.class));
+            }
+        });
 
     }
  @Override
         public boolean onNavigationItemSelected (@NonNull MenuItem item){
             switch (item.getItemId())
             {
-                case R.id.Admin_logout:
+                case R.id.logout:
                     FirebaseAuth.getInstance().signOut();
                     finish();
                     startActivity(new Intent(this, GetStartActivity.class));
                     break;
-                case R.id.Admin_profile:
+                case R.id.profile:
                     startActivity(new Intent(this, AdminProfileActivity.class));
                     break;
             }
             return true;
         }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }

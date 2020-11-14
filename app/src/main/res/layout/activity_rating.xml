@@ -10,14 +10,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Officers List"
+        android:text="Officers List For Rating"
         android:background="@color/colorYellow"
         android:textColor="@color/colorBlue"
         android:gravity="center"
         android:textSize="20sp"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/officer_RecyclerView"
+        android:id="@+id/officer_RecyclerView_for_Rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

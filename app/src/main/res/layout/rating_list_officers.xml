@@ -13,68 +13,54 @@
         android:orientation="vertical"
         android:background="@color/colorBlue">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:paddingLeft="10dp">
+            android:paddingBottom="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/Pro_pic"
+                android:id="@+id/Pro_pic_rating_list"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:alpha="700"
                 android:background="@drawable/admin_profile_image_radius"
-                android:src="@drawable/ico_upload_profile"/>
+                android:src="@drawable/ico_upload_profile" />
 
             <TextView
-                android:id="@+id/firt_name"
+                android:id="@+id/firt_name_rating_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/Pro_pic_rating_list"
+                android:layout_centerInParent="true"
                 android:text=""
                 android:textColor="@color/colorYellow" />
 
             <TextView
-                android:id="@+id/last_name"
+                android:id="@+id/last_name_rating_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/firt_name_rating_list"
                 android:layout_marginLeft="3dp"
                 android:text=""
                 android:textColor="@color/colorYellow" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/next_rating_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ico_next"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"/>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlue"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:layout_gravity="right">
-            <TextView
-                android:id="@+id/view_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View"
-                android:textColor="@color/colorYellow"
-                android:layout_marginRight="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textColor="@color/colorYellow"
-                android:layout_marginRight="20dp"/>
-            <TextView
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:textColor="@color/colorYellow"
-                android:layout_marginRight="0dp"/>
 
-        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
