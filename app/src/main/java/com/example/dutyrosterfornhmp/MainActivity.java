@@ -9,6 +9,8 @@ import android.view.Window;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AdminOfficer.AddRatingActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this,GetStartActivity.class);
+                Intent intent = new Intent(MainActivity.this, GetStartActivity.class);
                 startActivity(intent);
                 finish();
             }
