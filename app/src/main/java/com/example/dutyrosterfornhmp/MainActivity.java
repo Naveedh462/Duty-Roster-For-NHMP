@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import AdminOfficer.AddRatingActivity;
+import AdminOfficer.OrdersActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, GetStartActivity.class);
+                Intent intent = new Intent(MainActivity.this, OrdersActivity.class);
                 startActivity(intent);
                 finish();
             }
