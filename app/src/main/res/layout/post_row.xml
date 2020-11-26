@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -13,12 +11,10 @@
         android:background="@color/colorBlue">
         <ImageView
             android:id="@+id/postImageList"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:src="@drawable/add_btn"
+            android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp" />
 
 
         <TextView
@@ -37,18 +33,11 @@
             android:padding="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp"
             android:text="Post Description here" />
-
-        <TextView
-            android:id="@+id/timestampList"
-            android:text="Date created:"
-            android:padding="5dp"
-            android:textStyle="italic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="5dp"
+          android:background="@color/colorYellow"/>
     </LinearLayout>
 
-</>
+</androidx.cardview.widget.CardView>

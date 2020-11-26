@@ -27,22 +27,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.post_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_row, parent, false);
         return new ViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Orders order = ordersLists.get(position);
-        String imageUrl = null;
-
+        final Orders order = ordersLists.get(position);
         holder.title.setText(order.getTitle());
         holder.desc.setText(order.getDesc());
-        imageUrl = order.getImage();
         Picasso.get()
-                .load(imageUrl)
-                .centerCrop()
+                .load(order.getImage())
                 .into(holder.image);
     }
 
