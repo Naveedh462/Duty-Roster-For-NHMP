@@ -8,6 +8,8 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AdminOfficer.Admin;
+import AdminOfficer.AdminDashbordActivity;
 import AdminOfficer.OrderListActivity;
 import AdminOfficer.OrdersActivity;
 import Officers.RotationLeaveActivity;
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, RotationLeaveActivity.class);
+                Intent intent = new Intent(MainActivity.this, GetStartActivity.class);
                 startActivity(intent);
                 finish();
             }

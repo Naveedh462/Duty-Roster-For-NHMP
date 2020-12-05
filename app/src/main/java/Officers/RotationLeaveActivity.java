@@ -18,12 +18,11 @@ public class RotationLeaveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotation_leave);
-        CalendarView calendarView=(CalendarView)findViewById(R.id.calander_rotation_leave);
+        //CalendarView calendarView=(CalendarView)findViewById(R.id.calander_rotation_leave);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String selectedDate = sdf.format(new Date(calendarView.getDate()));
-
-        Log.d(TAG, "onChildAdded: Name: "+selectedDate);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //String selectedDate = sdf.format(new Date(calendarView.getDate()));
+        //Log.d(TAG, "onChildAdded: Name: "+selectedDate);
 
     }
 }

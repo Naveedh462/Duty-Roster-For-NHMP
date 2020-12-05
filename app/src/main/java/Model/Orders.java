@@ -1,6 +1,9 @@
 package Model;
 
+import androidx.annotation.Nullable;
+
 public class Orders {
+    public String uid;
     public String title;
     public String desc;
     public String image;
@@ -14,6 +17,13 @@ public class Orders {
         this.image = image;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getTitle() {
         return title;
@@ -37,6 +47,15 @@ public class Orders {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof Orders) {
+            Orders orders = (Orders) obj;
+            return this.uid.equals(orders.getUid());
+        }
+        return false;
     }
 
 }

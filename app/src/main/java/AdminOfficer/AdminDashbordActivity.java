@@ -11,12 +11,18 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ActionTypes;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.interfaces.TouchListener;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dutyrosterfornhmp.GetStartActivity;
 import com.example.dutyrosterfornhmp.LoginAdminActivity;
 import com.example.dutyrosterfornhmp.R;
@@ -29,6 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Model.ImageAdapter;
 
 public class AdminDashbordActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,7 +49,7 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRefe;
     private FirebaseAuth mAuth;
-
+    private static final String TAG = "MyTag";
 
 
     @Override
@@ -99,11 +108,34 @@ public class AdminDashbordActivity extends AppCompatActivity implements Navigati
             }
         });
 
-        // slider
+        /* slider for order update */
+        /*
         ViewPager viewPager = findViewById(R.id.viewPager);
         ImageAdapter adapter = new ImageAdapter(this);
         viewPager.setAdapter(adapter);
+        */
+        final ImageSlider imageSlider=findViewById(R.id.image_slider_admin);
+        final List<SlideModel> remoteimages= new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("Orders")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                      for(DataSnapshot data:snapshot.getChildren())
+                          remoteimages.add(new SlideModel(data.child("image").getValue().toString(), data.child("desc").getValue().toString(), ScaleTypes.FIT));
+                      imageSlider.setImageList(remoteimages,ScaleTypes.FIT);
+                      imageSlider.setTouchListener(new TouchListener() {
+                          @Override
+                          public void onTouched(ActionTypes actionTypes) {
+                              startActivity(new Intent(getApplicationContext(),OrderListActivity.class));
+                          }
+                      });
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
